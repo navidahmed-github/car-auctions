@@ -1,11 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { WatchlistContextProvider } from "./store/watchlist-context";
 import App from "./App";
+import "./Index.css";
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("root")
+ReactDOMClient.createRoot(document.getElementById("root")).render(
+  <WatchlistContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </WatchlistContextProvider>
 );
