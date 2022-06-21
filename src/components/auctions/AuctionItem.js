@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import WatchlistContext from "../../store/watchlist-context";
+import BidPopup from "../ui/BidPopup";
 import Card from "../ui/Card";
 import classes from "./AuctionItem.module.css";
 
@@ -37,7 +38,7 @@ function AuctionItem(props) {
         <div className={classes.actions}>
           <ul>
             <li>
-              <button className={classes.bid}>Place Bid</button>
+              <BidPopup item={props.id}/>
             </li>
             <li>
               <button onClick={toggleWatchlistHandler}>{auctionItemOnWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
