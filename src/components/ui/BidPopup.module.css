@@ -1,27 +1,29 @@
 .modal {
   font-size: 12px;
 }
-.modal > .header {
+.header {
   width: 100%;
   border-bottom: 1px solid gray;
   font-size: 18px;
   text-align: center;
   padding: 5px;
 }
-.modal > .content {
+.content {
   width: 100%;
   padding: 10px 5px;
 }
-.modal > .actions {
+.input {
+}
+.actions {
   width: 100%;
   padding: 10px 5px;
   margin: auto;
   text-align: center;
 }
-.modal > .close {
+.close {
   cursor: pointer;
   position: absolute;
-  display: block;
+  display: flex;
   padding: 2px 5px;
   line-height: 20px;
   right: -10px;
@@ -30,4 +32,22 @@
   background: #ffffff;
   border-radius: 18px;
   border: 1px solid #cfcece;
+}
+.actions {
+  padding-top: 1rem;
+  text-align: center;
+}
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  color: #77002e;
+  border: 1px solid #77002e;
+  background-color: transparent;
+  margin: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+}
+.actions button:hover,
+.actions button:active {
+  background-color: #ffe2ed;
 }

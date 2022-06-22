@@ -1,16 +1,19 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useContext } from "react";
 import Popup from "reactjs-popup";
 import classes from "./BidPopup.module.css";
+import WatchlistContext from "../../store/watchlist-context";
 
 function BidPopup(props) {
-  const history = useNavigate();
   const addToPriceRef = useRef();
+  const watchlistCtx = useContext(WatchlistContext);
 
   function addToAuctionPriceHandler(e) {
     e.preventDefault();
-
     const addValue = addToPriceRef.current.value;
+
+    const auctionItemOnWatchlist = watchlistCtx.auctionItemInWatchlist(
+      props.itemId
+    );
 
     fetch(
       "https://car-auctions-dcddb-default-rtdb.firebaseio.com/auctionItems.json"
@@ -20,26 +23,46 @@ function BidPopup(props) {
       })
       .then((data) => {
         let auctionItem = [];
-        let auctionItems = [];
         let updatedItem = [];
         for (const key in data) {
-          if (key === props.key) {
+          if (key === props.itemId) {
             auctionItem = {
               id: key,
               ...data[key],
             };
             updatedItem = auctionItem;
-            const newPrice = auctionItem.price + addValue;
+            const newPrice =
+              parseInt(auctionItem.price, 10) + parseInt(addValue, 10);
             updatedItem.price = newPrice;
           }
         }
-        auctionItems.push(updatedItem);
-        auctionItems.filter(
-          (auctionDeleteItem) => auctionDeleteItem.id !== auctionItem.id
+
+        const auctionItemData = {
+          image: updatedItem.image,
+          auctionTitle: updatedItem.auctionTitle,
+          description: updatedItem.description,
+          price: updatedItem.price,
+        };
+
+        fetch(
+          `https://car-auctions-dcddb-default-rtdb.firebaseio.com/auctionItems/${props.itemId}.json`,
+          {
+            method: "PUT",
+            body: JSON.stringify(auctionItemData),
+            header: { "Content-Type": "application/json" },
+          }
         );
-      })
-      .then(() => {
-        history("/", { replace: true });
+        if (auctionItemOnWatchlist) {
+          watchlistCtx.removeFromWatchlist(props.itemId);
+          watchlistCtx.addToWatchlist({
+            id: props.itemId,
+            key: props.itemId,
+            image: updatedItem.image,
+            auctionTitle: updatedItem.auctionTitle,
+            description: updatedItem.description,
+            price: updatedItem.price,
+          });
+        }
       });
   }
 
@@ -54,11 +77,14 @@ function BidPopup(props) {
           <button className={classes.close} onClick={close}>
             &times;
           </button>
-          <div className="header"> Place Bid </div>
+          <div className="header">
+            {" "}
+            <h2>Place Bid</h2>{" "}
+          </div>
           <form className="content" onSubmit={addToAuctionPriceHandler}>
             <div className={classes.control}>
               <label htmlFor="priceAddToAuctionP">
-                Enter amount to add to current auction price:
+                <p>Enter amount to add to current auction price:</p>
               </label>
               <input
                 type="text"
@@ -66,6 +92,7 @@ function BidPopup(props) {
                 required
                 name="priceAddToAuctionP"
                 ref={addToPriceRef}
+                className={classes.input}
               ></input>
             </div>
             <div className={classes.actions}>

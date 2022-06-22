@@ -6,7 +6,6 @@ import classes from "./AuctionItem.module.css";
 
 function AuctionItem(props) {
   const watchlistCtx = useContext(WatchlistContext);
-
   const auctionItemOnWatchlist = watchlistCtx.auctionItemInWatchlist(props.id);
 
   function toggleWatchlistHandler() {
@@ -38,10 +37,14 @@ function AuctionItem(props) {
         <div className={classes.actions}>
           <ul>
             <li>
-              <BidPopup item={props.id}/>
+              <BidPopup itemId={props.id} />
             </li>
             <li>
-              <button onClick={toggleWatchlistHandler}>{auctionItemOnWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
+              <button onClick={toggleWatchlistHandler}>
+                {auctionItemOnWatchlist
+                  ? "Remove from Watchlist"
+                  : "Add to Watchlist"}
+              </button>
             </li>
           </ul>
         </div>

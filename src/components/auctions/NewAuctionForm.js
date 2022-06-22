@@ -83,7 +83,7 @@ function NewAuctionForm() {
           ></input>
         </div>
         <div className={classes.actions}>
-          <button>Add Meetup</button>
+          <button>Add Car Auction</button>
           <button type="reset">Clear</button>
         </div>
       </form>
