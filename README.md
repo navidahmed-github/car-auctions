@@ -2,7 +2,7 @@
 
 Car Auctions is a passion project I built in order to showcase my React abilites and code style. <br /> <br />As a user you can place bids on a car, add a car to auction and save a car auction to a watchlist. This was completed using React and Firebase for the database and API endpoints.
 
-To run, copy the repository and using cmd, navigate to the saved path and follow the instructions below. <strong>`install npm`</strong> is required if not already installed.
+To run, copy the repository and using cmd, navigate to the saved path and follow the instructions below. <strong>`npm install`</strong> is required if not already installed.
 
 ## Available Scripts
 
