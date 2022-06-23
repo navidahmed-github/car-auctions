@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Card from "../ui/Card";
 import classes from "./NewAuctionForm.module.css";
 
 function NewAuctionForm() {
+  const [val, setVal] = useState();
   const history = useNavigate();
 
   const carModelInputRef = useRef();
   const carImageInputRef = useRef();
   const carDspInputRef = useRef();
   const startPriceRef = useRef();
+
+  function validateHandler(e) {
+    setVal((v) =>
+      e.target.validity.valid || e.target.value === "" ? e.target.value : v
+    );
+  }
 
   function addAuctionHandler(e) {
     e.preventDefault();
@@ -80,6 +87,9 @@ function NewAuctionForm() {
             required
             name="carStartPrice"
             ref={startPriceRef}
+            pattern="[1-9][0-9]*"
+            value={val}
+            onChange={validateHandler}
           ></input>
         </div>
         <div className={classes.actions}>

@@ -1,4 +1,4 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import Popup from "reactjs-popup";
 import classes from "./BidPopup.module.css";
 import WatchlistContext from "../../store/watchlist-context";
@@ -6,6 +6,13 @@ import WatchlistContext from "../../store/watchlist-context";
 function BidPopup(props) {
   const addToPriceRef = useRef();
   const watchlistCtx = useContext(WatchlistContext);
+  const [val, setVal] = useState();
+
+  function validateHandler(e) {
+    setVal((v) =>
+      e.target.validity.valid || e.target.value === "" ? e.target.value : v
+    );
+  }
 
   function addToAuctionPriceHandler(e) {
     e.preventDefault();
@@ -93,6 +100,9 @@ function BidPopup(props) {
                 name="priceAddToAuctionP"
                 ref={addToPriceRef}
                 className={classes.input}
+                pattern="[1-9][0-9]*"
+                value={val}
+                onChange={validateHandler}
               ></input>
             </div>
             <div className={classes.actions}>
