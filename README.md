@@ -8,6 +8,10 @@ To run, copy the repository and using cmd, navigate to the saved path and follow
 
 In the project directory, you can run:
 
+### `npm install`
+
+Install's App Dependencies.
+
 ### `npm start`
 
 Runs the app in the development mode.\
